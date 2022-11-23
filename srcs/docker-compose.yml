@@ -1,0 +1,11 @@
+version: '3'
+
+service:
+        mariadb:
+                container_name: mariadb 
+                networks:                       #a quel nework le container appartient
+                        -42_inception
+                build:
+                context: requirements/mariadb
+                dockerfile: Dockerfile
+
