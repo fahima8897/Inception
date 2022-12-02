@@ -1,5 +1,6 @@
 all: up
 
+
 up: #construit l'image puis cree le conteneur 
 
 down: #les conteneurs off
