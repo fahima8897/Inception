@@ -1,8 +1,8 @@
 FROM	debian:buster
 
 # UPDATE ANS INSTALL NGINX && OPENSSL
-RUN	apt update && \
-	apt install -y nginx \
+RUN	apt-get update && \
+	apt-get install -y nginx \
 			vim \
 			curl \
 			openssl 
@@ -11,7 +11,7 @@ RUN	apt update && \
 RUN 	mkdir -p /etc/nginx/ssl
 
 # GENERATING SSL CERTIFICATE
-RUN	openssl req -x509 -nodes -out /etc/nginx/ssl/inception.crt -keyout /etc/nginx/ssl/inception.key -subj "/C=FR/ST=IDF/L=Paris/0=42/OU=42/CN=fboumell.42.fr/UID=fboumell"
+RUN	openssl req -x509 -nodes -out /etc/nginx/ssl/inception.crt -keyout /etc/nginx/ssl/inception.key -subj "/C=FR/ST=IDF/L=Paris/O=42/OU=42/CN=fboumell.42.fr/UID=fboumell"
 
 # DIRECTORY TO SAVE ALL THE NGINX CONFIG FILES
 RUN	mkdir -p /var/run/nginx
