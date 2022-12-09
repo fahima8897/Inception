@@ -1,0 +1,7 @@
+#!/bin/bash
+
+service mysql start
+
+msql -e "CREATE DATABASE IF NOT EXISTS \ `${SQL_DATABASE}\`;"
+msql -e "CREATE USER IF NOT EXISTS \ `${SQL_USER}\`@'localhost' IDENTIFIED BY '${SQL_PASSWORD}';"
+
