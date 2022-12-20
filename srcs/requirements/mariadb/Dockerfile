@@ -7,4 +7,12 @@ RUN	apt-get install mariadb-server -y
 
 # COPY OUR CONFIG FILE TO REPLACE MARIADB CONFIG FILE
 COPY	conf/50-server.cnf /etc/mysql/mariadb.conf/50-server.cnf
- 
+
+RUN	mkdir -p /script
+
+# COPY THE SCRIPT TO CREATE THE DATABASE AND THE USER INTO THE CONTAINER
+COPY	tools/script_mariadb.sh script/script_mariadb.sh
+
+ENTRYPOINT ["bash", "/script/script_mariadb.sh"]
+
+EXPOSE	3306
