@@ -3,7 +3,7 @@ FROM	debian:buster
 # UPDATE & UPGRADE
 RUN	apt-get update && apt-get upgrade -y
 
-# INSTALL
+# INSTALL WGET TO DOWNLOAD WORDPRESS
 RUN	apt-get -y install wget
 
 # INSTALL PHP 7.3 AND DEPENDENCIES
@@ -17,4 +17,16 @@ RUN	wget https://fr.wordpress.org/wordpress-6.0.tar.gz -P /var/www
 RUN	cd /var/www && tar -xzf wordpress-6.0.tar.gz && rm wordpress-6.0.tar.gz
 
 # COPY PHP CONF
-COPY	
+COPY	conf/www.conf /etc/php/7.3/fpm/pool.d/www.conf
+
+# ALLOW THE USER TO WRITE INT THE DIRECTORY
+RUN	chown -R root:root /var/www/wordpress
+
+# DOWNLOAD WP-CLI PACKAGE (TO MANAGE WORDPRESS INSTALLATION)
+RUN	wget https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
+RUN	chmod +x wp-cli.phar
+RUN	mv wp-cli.phar /usr/local/bin/wp
+
+COPY	conf/auto_config.sh auto_config.sh
+
+ENTRYPOINT	["bash", "auto_config.sh"]
