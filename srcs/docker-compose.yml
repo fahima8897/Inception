@@ -48,6 +48,24 @@ service:
 			- "9000"
 
 
-			
+volumes:
+	wordppress:
+		driver: local
+		driver_opts:
+			type: 'none'
+			o: 'bind'
+			device: '/Users/fboumell/data/wordpress'
+	mariadb:
+		driver: local
+		driver_opts:
+			type: 'none'
+			o: 'bind'
+			device: 'Users/fboumell/data/mariadb'
+
+
+networks:
+	42_inception:
+		driver: bridge
+
 
 
