@@ -4,8 +4,47 @@ service:
         mariadb:
                 container_name: mariadb 
                 networks:                       #a quel nework le container appartient
-                        -42_inception
+                        - 42_inception
                 build:
-                context: requirements/mariadb
-                dockerfile: Dockerfile
+                        context: requirements/mariadb   #ou se trouve le dockerfile
+                        dockerfile: Dockerfile          #le nom du dockerfile
+                env_file: .env                  #le fichier d'environemment pour transmettre les variables
+                volumes:
+                        - mariadb:/var/lib/mysql
+                restart: unless-stopped         #redemarrer tant qu'il n'est pas stoppe
+                expose:                         #le port a exposer
+                        - "3306"
+
+        nginx:
+                container_name: nginx
+                volumes:
+                        - wordpress:/var/www/wordpress
+                networks:
+                        - 42_inception
+                depends_on:                     #ligne indiquant de ne pas demarrer nginx tant que worpress n'a pas demarre
+                        -wordpress
+                build:
+                        context: requirements/nginx
+                        dockerfile: Dockerfile
+                env_file: .env
+                ports:
+                        - "443:443"                     #on indiaue le port qui serq expose a la machine locale
+                restart: on-failure             #le container redemerrera uniquement en cas de crash
+
+        wordpress:
+                container_name: wordpress
+                env_file: .env
+                volumes:
+                        - wordpress:/var/www/wordpress
+                networks:
+                        - 42_inception
+                build:
+                        context: requirements/wordpress
+                        dockerfile: Dockerfile
+                depends_on:        #worpress demarre seulement apres mariadb (sinon il lui sera impossible de configurer la base de donnees)
+                        - mariadb
+                restart: on-failure
+                expose:
+                        - "9000"
+
 
