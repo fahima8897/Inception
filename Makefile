@@ -1,4 +1,31 @@
-all: up
+COMPOSE = docker-compose -f ./src/docker-compose.yml
+
+all: make build
+	 make up
+
+build : 
+		$(COMPOSE) build $(c)
+
+up : 
+		$(COMPOSE) up -d $(c)
+
+start : 
+		$(COMPOSE) start $(c)
+
+down : 
+		$(COMPOSE) down $(c)
+
+stop :
+		$(COMPOSE) stop $(c)
+
+restart : stop build up
+
+prune :
+		docker volume prune --force
+
+re : build up down prune
+
+.PHONY : all build up start down stop restart prune re
 
 
 up: #construit l'image puis cree le conteneur 
@@ -21,5 +48,3 @@ config: # montre la configuration de ton docker-compose, et permet de voir les v
 nginx: #permet d'entrer directement dans un conteneur qUI TOURNE
 mariadb: #idem
 wordpress: #idem 
-
-
