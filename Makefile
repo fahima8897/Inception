@@ -1,8 +1,8 @@
 COMPOSE = docker-compose -f ./src/docker-compose.yml
 
 all:
-	make build
-	 make up
+		make build
+		make up
 
 build : 
 		$(COMPOSE) build $(c)
