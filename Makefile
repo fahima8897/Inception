@@ -1,33 +1,40 @@
-COMPOSE = docker-compose -f ./src/docker-compose.yml
+COMPOSE	= cd srcs && docker compose
 
 all:
-		make build
-		make up
+			sudo mkdir -p /home/fboumell/data/mysql 
+			sudo mkdir -p /home/fboumell/data/html
+			$(MAKE) build-no-cache
+			$(MAKE) up
+build:
+	$(COMPOSE) build 
+build-no-cache:
+	$(COMPOSE) build --no-cache
+up :
+	$(COMPOSE) up
+down :
+	$(COMPOSE) down
+up-v :
+	$(COMPOSE) --verbose up
+up-b :
+	$(COMPOSE) up --build
+up-d :
+	$(COMPOSE) up -d
+config :
+	$(COMPOSE) config
+re : fclean all
 
-build : 
-		$(COMPOSE) build $(c)
+clean :
+			$(COMPOSE) down -v --rmi all --remove-orphans
 
-up : 
-		$(COMPOSE) up -d $(c)
+fclean :	clean
+			sudo rm -rf	/home/chajax/data/mysql \
+						/home/chajax/data/html
+			docker system prune --volumes --all --force
+			docker network prune --force
+			echo docker volume rm $(docker volume ls -q)
+			docker image prune --force
 
-start : 
-		$(COMPOSE) start $(c)
-
-down : 
-		$(COMPOSE) down $(c)
-
-stop :
-		$(COMPOSE) stop $(c)
-
-restart : stop build up
-
-prune :
-		docker volume prune --force
-
-re : build up down prune
-
-.PHONY : all build up start down stop restart prune re
-
+.PHONY : all build up up-b up-v up-d config down clean fclean re
 
 #up: #construit l'image puis cree le conteneur 
 
