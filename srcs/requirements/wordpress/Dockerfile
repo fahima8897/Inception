@@ -13,8 +13,10 @@ RUN	apt-get install -y php7.3 \
 	mariadb-client
 
 # DOWNLOAD WORDPRESS 6.0 INTO /VAR/WWW AND EXTRACT IT
-RUN	wget https://fr.wordpress.org/wordpress-6.0.tar.gz -P /var/www
-RUN	cd /var/www && tar -xzf wordpress-6.0.tar.gz && rm wordpress-6.0.tar.gz
+RUN mkdir -p /var/www \
+&& wget https://fr.wordpress.org/wordpress-6.0-fr_FR.tar.gz -P /var/www \
+&& cd /var/www && tar xvf wordpress-6.0-fr_FR.tar.gz \
+&& rm wordpress-6.0-fr_FR.tar.gz
 
 # COPY PHP CONF
 COPY	conf/www.conf /etc/php/7.3/fpm/pool.d/www.conf
@@ -30,3 +32,4 @@ RUN	mv wp-cli.phar /usr/local/bin/wp
 COPY	conf/auto_config.sh auto_config.sh
 
 ENTRYPOINT	["bash", "auto_config.sh"]
+
