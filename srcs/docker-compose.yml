@@ -54,13 +54,13 @@ volumes:
         driver_opts:
             type: 'none'
             o: 'bind'
-            device: '/Users/fboumell/data/wordpress'
+            device: '/home/fboumell/data/wordpress'
     mariadb:
         driver: local
         driver_opts:
             type: 'none'
             o: 'bind'
-            device: 'Users/fboumell/data/mariadb'
+            device: 'home/fboumell/data/mariadb'
 
 
 networks:
