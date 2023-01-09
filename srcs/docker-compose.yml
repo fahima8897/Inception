@@ -2,18 +2,18 @@ version: '3'
 
 service:
     mariadb:
-    container_name: mariadb
-    networks:                       #a quel nework le container appartient
-     - 42_inception
-    build:
-        context: requirements/mariadb   #ou se trouve le dockerfile
-        dockerfile: Dockerfile          #le nom du dockerfile
-        env_file: .env                  #le fichier d'environemment pour transmettre les variables
-        volumes:
-            - mariadb:/var/lib/mysql
-        restart: unless-stopped         #redemarrer tant qu'il n'est pas stoppe
-        expose:                         #le port a exposer
-            - "3306"
+        container_name: mariadb
+        networks:                       #a quel nework le container appartient
+        - 42_inception
+        build:
+            context: requirements/mariadb   #ou se trouve le dockerfile
+            dockerfile: Dockerfile          #le nom du dockerfile
+            env_file: .env                  #le fichier d'environemment pour transmettre les variables
+            volumes:
+                - mariadb:/var/lib/mysql
+            restart: unless-stopped         #redemarrer tant qu'il n'est pas stoppe
+            expose:                         #le port a exposer
+                - "3306"
 
     nginx:
         container_name: nginx
