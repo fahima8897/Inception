@@ -27,8 +27,8 @@ clean :
 			$(COMPOSE) down -v --rmi all --remove-orphans
 
 fclean :	clean
-			sudo rm -rf	/home/chajax/data/mysql \
-						/home/chajax/data/html
+			sudo rm -rf	/home/fboumell/data/mysql \
+						/home/fboumell/data/html
 			docker system prune --volumes --all --force
 			docker network prune --force
 			echo docker volume rm $(docker volume ls -q)
