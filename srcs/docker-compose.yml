@@ -1,6 +1,6 @@
 version: '3'
 
-service:
+services:
  mariadb:
   container_name: mariadb
   networks:                       #a quel nework le container appartient
@@ -22,7 +22,7 @@ service:
   networks:
    - 42_inception
   depends_on:                     #ligne indiquant de ne pas demarrer nginx tant que worpress n'a pas demarre
-   -wordpress
+   - wordpress
   build:
   context: requirements/nginx
   dockerfile: Dockerfile

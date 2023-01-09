@@ -3,7 +3,7 @@ all:	up
 up:
 	mkdir -p /home/${USER}/data/mariadb
 	mkdir -p /home/${USER}/data/wordpress
-	docker compose -f srcs/docker-compose.yml up -d
+	docker compose -f srcs/docker-compose.yml up -d --build
 
 down:
 	docker compose -f srcs/docker-compose.yml down
