@@ -18,7 +18,7 @@ services:
  nginx:
   container_name: nginx
   volumes:
-   - wordpress:/var/www/wordpress
+   - wordpress:/var/www/html
   networks:
    - 42_inception
   depends_on:                     #ligne indiquant de ne pas demarrer nginx tant que worpress n'a pas demarre
