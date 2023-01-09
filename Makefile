@@ -1,40 +1,32 @@
-COMPOSE	= cd srcs && docker compose
+all:	up
 
-all:
-			sudo mkdir -p /home/fboumell/data/mysql 
-			sudo mkdir -p /home/fboumell/data/html
-			$(MAKE) build-no-cache
-			$(MAKE) up
-build:
-	$(COMPOSE) build 
-build-no-cache:
-	$(COMPOSE) build --no-cache
-up :
-	$(COMPOSE) up
-down :
-	$(COMPOSE) down
-up-v :
-	$(COMPOSE) --verbose up
-up-b :
-	$(COMPOSE) up --build
-up-d :
-	$(COMPOSE) up -d
-config :
-	$(COMPOSE) config
-re : fclean all
+up:
+	mkdir -p /home/${USER}/data/db
+	mkdir -p /home/${USER}/data/wp
+	docker-compose -f srcs/docker-compose.yml up -d
 
-clean :
-			$(COMPOSE) down -v --rmi all --remove-orphans
+down:
+	docker-compose -f srcs/docker-compose.yml down
 
-fclean :	clean
-			sudo rm -rf	/home/fboumell/data/mysql \
-						/home/fboumell/data/html
-			docker system prune --volumes --all --force
-			docker network prune --force
-			echo docker volume rm $(docker volume ls -q)
-			docker image prune --force
+ps:
+	docker-compose -f srcs/docker-compose.yml ps
 
-.PHONY : all build up up-b up-v up-d config down clean fclean re
+fclean: down
+	docker rmi -f $$(docker images -qa);\
+	docker volume rm $$(docker volume ls -q);\
+	docker system prune -a --force
+	sudo rm -Rf /home/${USER}/data/db
+	sudo rm -Rf /home/${USER}/data/wp
+	mkdir /home/${USER}/data/db
+	mkdir /home/${USER}/data/wp
+
+re:
+	mkdir -p ../data/wp
+	mkdir -p ../data/db
+	docker-compose -f srcs/docker-compose.yml build
+	docker-compose -f srcs/docker-compose.yml up
+
+.PHONY:	all up down ps fclean re
 
 #up: #construit l'image puis cree le conteneur 
 
