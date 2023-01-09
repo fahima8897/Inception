@@ -4,7 +4,7 @@ service:
     mariadb:
         container_name: mariadb
         networks:                       #a quel nework le container appartient
-        - 42_inception
+            - 42_inception
         build:
             context: requirements/mariadb   #ou se trouve le dockerfile
             dockerfile: Dockerfile          #le nom du dockerfile

@@ -3,13 +3,13 @@ all:	up
 up:
 	mkdir -p /home/${USER}/data/mariadb
 	mkdir -p /home/${USER}/data/wordpress
-	docker-compose -f srcs/docker-compose.yml up -d
+	docker compose -f srcs/docker-compose.yml up -d
 
 down:
-	docker-compose -f srcs/docker-compose.yml down
+	docker compose -f srcs/docker-compose.yml down
 
 ps:
-	docker-compose -f srcs/docker-compose.yml ps
+	docker compose -f srcs/docker-compose.yml ps
 
 fclean: down
 	docker rmi -f $$(docker images -qa);\
@@ -23,8 +23,8 @@ fclean: down
 re:
 	mkdir -p ../data/wp
 	mkdir -p ../data/db
-	docker-compose -f srcs/docker-compose.yml build
-	docker-compose -f srcs/docker-compose.yml up
+	docker compose -f srcs/docker-compose.yml build
+	docker compose -f srcs/docker-compose.yml up
 
 .PHONY:	all up down ps fclean re
 
