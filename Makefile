@@ -21,8 +21,8 @@ fclean: down
 	mkdir /home/${USER}/data/wordpress
 
 re:
-	mkdir -p ../data/wp
-	mkdir -p ../data/db
+	mkdir -p ../data/mariadb
+	mkdir -p ../data/wordpress
 	sudo docker compose -f srcs/docker-compose.yml build
 	sudo docker compose -f srcs/docker-compose.yml up
 
