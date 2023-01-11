@@ -51,15 +51,15 @@ volumes:
   wordpress:
    driver: local
    driver_opts:
-    type: 'none'
-    o: 'bind'
-    device: '/home/fboumell/data/wordpress'
+    type: none
+    o: bind
+    device: /home/fboumell/data/wordpress
   mariadb:
    driver: local
    driver_opts:
-    type: 'none'
-    o: 'bind'
-    device: '/home/fboumell/data/mariadb'
+    type: none
+    o: bind
+    device: /home/fboumell/data/mariadb
 
 networks:
   42_inception:
