@@ -13,6 +13,12 @@ RUN	mkdir -p /script
 # COPY THE SCRIPT TO CREATE THE DATABASE AND THE USER INTO THE CONTAINER
 COPY	tools/script_mariadb.sh script/script_mariadb.sh
 
+RUN	mkdir -p /var/run/mysql && \
+	chown -R mysql:mysql /var/run/mysqld \
+	chmod 755 /var/run/mysqld \
+			/script/script_mariadb.sh && \
+	mysql_install_db
+
 ENTRYPOINT ["bash", "/script/script_mariadb.sh"]
 
 EXPOSE	3306
